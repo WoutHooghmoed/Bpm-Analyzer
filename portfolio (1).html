@@ -3,124 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Portfolio</title>
+    <title>Advanced Portfolio</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
+        /* General Styles */
+        body, html {
             margin: 0;
             padding: 0;
-            background-color: #121212;
-            color: white;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #3b008d, #8c3cb1);
+            color: #fff;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
-        header {
-            background: #1a1a1a;
+
+        /* Gradient & Glowing Effects */
+        .glow {
+            background: linear-gradient(90deg, rgba(75,0,130,0.8), rgba(139,0,255,0.8));
+            box-shadow: 0 0 20px rgba(75,0,130,0.7), 0 0 40px rgba(139,0,255,0.7), 0 0 60px rgba(255,255,255,0.7);
+            border-radius: 20px;
             padding: 20px;
+        }
+
+        /* Global Styles */
+        h1, h2, h3, h4 {
             text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
-        nav {
-            margin: 20px 0;
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #ffccff, #ff00ff);
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: glowing-text 2s ease-in-out infinite alternate;
         }
-        nav a {
-            margin: 0 15px;
-            color: white;
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        h4 {
+            font-size: 1.2em;
+            margin-top: 10px;
+            opacity: 0.7;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.1em;
+            max-width: 900px;
+            margin: 0 auto 40px;
+        }
+
+        a {
+            color: #fff;
             text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
         }
-        nav a:hover {
-            color: #ff4081;
+
+        /* Section Styles */
+        section {
+            padding: 100px 50px;
+            position: relative;
         }
-        .container {
+
+        /* Hover Animation */
+        .hover-effect {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #ff6dff, #b93bdf);
+            border-radius: 50px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease-in-out;
+            text-align: center;
+            color: #fff;
+            font-size: 1.2em;
+            letter-spacing: 1px;
+        }
+
+        .hover-effect:hover {
+            background: linear-gradient(135deg, #ff00ff, #8300e9);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.5);
+            transform: translateY(-5px);
+        }
+
+        /* Glowing Text Animation */
+        @keyframes glowing-text {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            font-size: 1.2em;
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
-        }
-        .tab-content {
-            display: none;
-            width: 80%;
-            margin-top: 20px;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        .project {
-            background: #1a1a1a;
-            border-radius: 8px;
-            overflow: hidden;
-            margin: 10px;
-            transition: transform 0.3s;
-        }
-        .project:hover {
-            transform: scale(1.05);
-        }
-        img {
-            width: 100%;
-            height: auto;
-        }
-        footer {
-            margin-top: 20px;
             text-align: center;
-            padding: 10px;
-            background: #1a1a1a;
+            background: linear-gradient(135deg, #5000a8, #9300d1);
+            animation: background-move 5s ease-in-out infinite alternate;
+        }
+
+        /* Background animation */
+        @keyframes background-move {
+            0% { background-position: left; }
+            100% { background-position: right; }
+        }
+
+        .hero h1 {
+            font-size: 4em;
+            letter-spacing: 5px;
+        }
+
+        .hero .hover-effect {
+            margin-top: 30px;
+        }
+
+        /* About Section */
+        .about {
+            background: linear-gradient(135deg, #a43bd4, #6b00c2);
+            color: #fff;
+        }
+
+        /* Projects Section */
+        .projects {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .project-card {
+            background-color: #2b0057;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+            margin-bottom: 40px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, #8c00ff, #43007b);
+        }
+
+        .contact a {
+            color: #fff;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2b0057;
+            padding: 20px;
+            text-align: center;
+            color: #ccc;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Wout</h1>
+    <!-- Navigation -->
     <nav>
-        <a href="#" onclick="showTab('about')">About</a>
-        <a href="#" onclick="showTab('projects')">Projects</a>
-        <a href="#" onclick="showTab('contact')">Contact</a>
+        <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
     </nav>
-</header>
 
-<div class="container">
-    <div id="about" class="tab-content active">
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <h1>Welcome to My Portfolio</h1>
+        <p>Your next favorite developer.</p>
+        <a href="#about" class="hover-effect">Explore More</a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about glow">
         <h2>About Me</h2>
-        <p>Test, Hello! I am Wout! I make stages and then projects.</p>
-    </div>
+        <p>Hello! I'm a passionate web developer specializing in crafting beautiful, responsive, and interactive websites. My mission is to create seamless user experiences with modern technologies.</p>
+    </section>
 
-    <div id="projects" class="tab-content">
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
         <h2>My Projects</h2>
-        <div class="project">
-            <img src="images/project1.jpg" alt="Project 1">
-            <h3>Project 1</h3>
-            <p>Description of your project 1 goes here.</p>
-        </div>
-        <div class="project">
-            <img src="images/project2.jpg" alt="Project 2">
-            <h3>Project 2</h3>
-            <p>Description of your project 2 goes here.</p>
-        </div>
-        <div class="project">
-            <img src="images/project3.jpg" alt="Project 3">
-            <h3>Project 3</h3>
-            <p>Description of your project 3 goes here.</p>
-        </div>
-        <!-- Add more projects as needed -->
-    </div>
 
-    <div id="contact" class="tab-content">
+        <div class="project-card glow">
+            <h3>Project 1: Purple Lights</h3>
+            <p>A creative portfolio showcasing vibrant designs and interactive elements, centered on a stunning purple gradient theme.</p>
+        </div>
+
+        <div class="project-card glow">
+            <h3>Project 2: Tech Blog</h3>
+            <p>A tech blog built for sharing tutorials, tips, and insights about the latest web development trends.</p>
+        </div>
+
+        <div class="project-card glow">
+            <h3>Project 3: E-commerce Platform</h3>
+            <p>An advanced, responsive e-commerce platform built with cutting-edge tools for a modern shopping experience.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact glow">
         <h2>Contact Me</h2>
-        <p>If you’d like to get in touch, feel free to reach out via email at <a href="mailto:youremail@example.com" style="color: #ff4081;">youremail@example.com</a>.</p>
-    </div>
-</div>
+        <p>I'm always open to discussing new projects, creative ideas, or opportunities. Feel free to <a href="mailto:youremail@example.com">email me</a>.</p>
+    </section>
 
-<footer>
-    <p>&copy; 2024 Wout. All Rights Reserved.</p>
-</footer>
-
-<script>
-    function showTab(tabName) {
-        const tabs = document.querySelectorAll('.tab-content');
-        tabs.forEach(tab => {
-            tab.classList.remove('active');
-        });
-        document.getElementById(tabName).classList.add('active');
-    }
-</script>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Your Name. All Rights Reserved.</p>
+    </footer>
 
 </body>
 </html>
