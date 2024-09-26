@@ -3,266 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Portfolio</title>
+    <title>Mystrerium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
-        body, html {
+        body {
             margin: 0;
-            padding: 0;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #3b008d, #8c3cb1);
+            background: linear-gradient(to right, #ffcc00, #ff6600);
             color: #fff;
             scroll-behavior: smooth;
             overflow-x: hidden;
-        }
-
-        /* Gradient & Glowing Effects */
-        .glow {
-            background: linear-gradient(90deg, rgba(75,0,130,0.8), rgba(139,0,255,0.8));
-            box-shadow: 0 0 20px rgba(75,0,130,0.7), 0 0 40px rgba(139,0,255,0.7), 0 0 60px rgba(255,255,255,0.7);
-            border-radius: 20px;
-            padding: 20px;
-        }
-
-        /* Global Styles */
-        h1, h2, h3, h4 {
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        h1 {
-            font-size: 3.5em;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, #ffccff, #ff00ff);
-            -webkit-background-clip: text;
-            color: transparent;
-            animation: glowing-text 2s ease-in-out infinite alternate;
-        }
-
-        h2 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        h3 {
-            font-size: 1.5em;
-            margin-bottom: 5px;
-        }
-
-        h4 {
-            font-size: 1.2em;
-            margin-top: 10px;
-            opacity: 0.7;
-        }
-
-        p {
-            text-align: center;
-            font-size: 1.1em;
-            max-width: 900px;
-            margin: 0 auto 40px;
-        }
-
-        a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        /* Section Styles */
-        section {
-            padding: 100px 50px;
-            position: relative;
-        }
-
-        /* Hover Animation */
-        .hover-effect {
-            display: inline-block;
-            padding: 15px 40px;
-            background: linear-gradient(135deg, #ff6dff, #b93bdf);
-            border-radius: 50px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
-            transition: all 0.3s ease-in-out;
-            text-align: center;
-            color: #fff;
-            font-size: 1.2em;
-            letter-spacing: 1px;
-        }
-
-        .hover-effect:hover {
-            background: linear-gradient(135deg, #ff00ff, #8300e9);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.5);
-            transform: translateY(-5px);
-        }
-
-        /* Glowing Text Animation */
-        @keyframes glowing-text {
-            0% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
-
-        /* Navbar */
-        nav {
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.1);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 100;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
-        }
-
-        nav ul li a {
-            font-size: 1.2em;
-            font-weight: 500;
-            padding: 10px 20px;
-            border-radius: 50px;
-            background: rgba(255, 255, 255, 0.1);
             transition: background 0.3s ease;
         }
 
-        nav ul li a:hover {
-            background: rgba(255, 255, 255, 0.3);
+        header {
+            position: fixed;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: background 0.3s ease;
         }
 
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
+        header h1 {
+            text-align: center;
+            font-size: 36px;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        nav {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: color 0.3s, transform 0.2s;
+        }
+
+        nav a:hover {
+            color: #ff9900;
+            transform: scale(1.1);
+        }
+
+        .container {
+            display: none;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            padding-top: 100px;
+        }
+
+        section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 40px;
+            margin: 20px;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            transition: background 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        section:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        section h2 {
+            margin-top: 0;
+            font-size: 28px;
             text-align: center;
-            background: linear-gradient(135deg, #5000a8, #9300d1);
-            animation: background-move 5s ease-in-out infinite alternate;
+            position: relative;
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        /* Background animation */
-        @keyframes background-move {
-            0% { background-position: left; }
-            100% { background-position: right; }
-        }
-
-        .hero h1 {
-            font-size: 4em;
-            letter-spacing: 5px;
-        }
-
-        .hero .hover-effect {
-            margin-top: 30px;
-        }
-
-        /* About Section */
-        .about {
-            background: linear-gradient(135deg, #a43bd4, #6b00c2);
-            color: #fff;
-        }
-
-        /* Projects Section */
-        .projects {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .project-card {
-            background-color: #2b0057;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
-            margin-bottom: 40px;
+        section p {
+            line-height: 1.6;
             text-align: center;
-            transition: transform 0.3s ease;
         }
 
-        .project-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+        .discord-link {
+            display: inline-block;
+            background: #7289da;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background 0.3s ease;
         }
 
-        /* Contact Section */
-        .contact {
-            background: linear-gradient(135deg, #8c00ff, #43007b);
+        .discord-link:hover {
+            background: #5b6eae;
         }
 
-        .contact a {
-            color: #fff;
-            text-decoration: underline;
-            font-weight: 600;
-        }
-
-        /* Footer */
         footer {
-            background-color: #2b0057;
-            padding: 20px;
             text-align: center;
-            color: #ccc;
+            margin-top: 20px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav a {
+                font-size: 16px;
+            }
+            section {
+                width: 90%;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Navigation -->
+<header>
+    <h1>Mystrerium</h1>
     <nav>
-        <ul>
-            <li><a href="#hero">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+        <a href="#" onclick="showSection('home')">Home</a>
+        <a href="#" onclick="showSection('about')">About</a>
+        <a href="#" onclick="showSection('projects')">Projects</a>
+        <a href="#" onclick="showSection('contact')">Contact</a>
     </nav>
+</header>
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero">
-        <h1>Welcome to My Portfolio</h1>
-        <p>Your next favorite developer.</p>
-        <a href="#about" class="hover-effect">Explore More</a>
+<div id="home" class="container" style="display: flex;">
+    <section>
+        <h2>Welcome to Mystrerium!</h2>
+        <p>This is a brief description about the website and its purpose. Here, you can find amazing projects and connect with our community.</p>
     </section>
+</div>
 
-    <!-- About Section -->
-    <section id="about" class="about glow">
-        <h2>About Me</h2>
-        <p>Hello! I'm a passionate web developer specializing in crafting beautiful, responsive, and interactive websites. My mission is to create seamless user experiences with modern technologies.</p>
+<div id="about" class="container">
+    <section>
+        <h2>About</h2>
+        <p>Mystrerium is dedicated to bringing creative ideas to life. We believe in innovation and collaboration.</p>
     </section>
+</div>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
-        <h2>My Projects</h2>
-
-        <div class="project-card glow">
-            <h3>Project 1: Purple Lights</h3>
-            <p>A creative portfolio showcasing vibrant designs and interactive elements, centered on a stunning purple gradient theme.</p>
-        </div>
-
-        <div class="project-card glow">
-            <h3>Project 2: Tech Blog</h3>
-            <p>A tech blog built for sharing tutorials, tips, and insights about the latest web development trends.</p>
-        </div>
-
-        <div class="project-card glow">
-            <h3>Project 3: E-commerce Platform</h3>
-            <p>An advanced, responsive e-commerce platform built with cutting-edge tools for a modern shopping experience.</p>
-        </div>
+<div id="projects" class="container">
+    <section>
+        <h2>Projects</h2>
+        <p>Explore our various projects that showcase creativity and innovation. Each project represents a unique aspect of our work.</p>
     </section>
+</div>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact glow">
-        <h2>Contact Me</h2>
-        <p>I'm always open to discussing new projects, creative ideas, or opportunities. Feel free to <a href="mailto:youremail@example.com">email me</a>.</p>
+<div id="contact" class="container">
+    <section>
+        <h2>Contact</h2>
+        <p>Feel free to reach out through our social channels. We're always eager to connect with new people!</p>
+        <a class="discord-link" href="https://discord.gg/2492tjXZhb" target="_blank">Join our Discord</a>
     </section>
+</div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Your Name. All Rights Reserved.</p>
-    </footer>
+<footer>
+    <p>&copy; 2024 Mystrerium. All rights reserved.</p>
+</footer>
+
+<script>
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('.container');
+        sections.forEach(section => {
+            section.style.display = 'none';
+        });
+        document.getElementById(sectionId).style.display = 'flex';
+    }
+</script>
 
 </body>
 </html>
