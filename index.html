@@ -3,189 +3,840 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mystrerium</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <title>Professional BPM Analyzer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #60a5fa;
+            --secondary: #64748b;
+            --success: #059669;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            
+            /* Dark mode variables */
+            --dark-background: #1a1a1a;
+            --dark-surface: #2d2d2d;
+            --dark-text: #ffffff;
+            --dark-border: #404040;
+        }
+
         body {
+            font-family: 'Inter', sans-serif;
             margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to right, #ffcc00, #ff6600);
-            color: #fff;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-            transition: background 0.3s ease;
+            padding: 0;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
         }
 
-        header {
+        /* Dark mode classes */
+        body.dark-mode {
+            background: var(--dark-background);
+            color: var(--dark-text);
+        }
+
+        body.dark-mode .card {
+            background: var(--dark-surface);
+            border-color: var(--dark-border);
+        }
+
+        body.dark-mode .upload-area {
+            background: linear-gradient(to bottom, var(--dark-background), var(--dark-surface));
+            border-color: var(--dark-border);
+        }
+
+        body.dark-mode .theme-toggle {
+            background: var(--dark-surface);
+            border-color: var(--dark-border);
+            color: var(--dark-text);
+        }
+
+        body.dark-mode .audio-controls {
+            background: var(--dark-surface);
+        }
+
+        body.dark-mode .transport-btn {
+            background: var(--dark-surface);
+            border-color: var(--dark-border);
+            color: var(--dark-text);
+        }
+
+        /* Theme toggle button */
+        .theme-toggle {
             position: fixed;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            top: 1rem;
+            right: 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
             z-index: 1000;
-            padding: 15px 0;
-            transition: background 0.3s ease;
+            box-shadow: var(--shadow);
         }
 
-        header h1 {
+        .theme-toggle span {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Creator credit */
+        .creator-credit {
             text-align: center;
-            font-size: 36px;
-            margin: 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            padding: 1rem;
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-top: 2rem;
         }
 
-        nav {
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        nav a {
-            color: #fff;
+        .creator-credit a {
+            color: var(--primary);
             text-decoration: none;
-            margin: 0 15px;
-            font-size: 18px;
-            transition: color 0.3s, transform 0.2s;
         }
 
-        nav a:hover {
-            color: #ff9900;
-            transform: scale(1.1);
+        .creator-credit a:hover {
+            text-decoration: underline;
         }
 
         .container {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding-top: 100px;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
         }
 
-        section {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 40px;
-            margin: 20px;
-            width: 80%;
-            max-width: 800px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            transition: background 0.3s ease;
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
             position: relative;
             overflow: hidden;
         }
 
-        section:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 100%);
         }
 
-        section h2 {
-            margin-top: 0;
-            font-size: 28px;
-            text-align: center;
+        .header h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
             position: relative;
-            animation: fadeIn 0.5s ease-in-out;
         }
 
-        section p {
-            line-height: 1.6;
+        .card {
+            background: var(--surface);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .upload-section {
             text-align: center;
         }
 
-        .discord-link {
-            display: inline-block;
-            background: #7289da;
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 1.5rem 0;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: linear-gradient(to bottom, var(--background), var(--surface));
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: linear-gradient(to bottom, var(--background), var(--primary-light) 100%);
+            color: var(--primary-dark);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .btn {
+            background: var(--primary);
             color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            margin-top: 20px;
-            transition: background 0.3s ease;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            min-width: 150px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
-        .discord-link:hover {
-            background: #5b6eae;
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
         }
 
-        footer {
+        .btn:disabled {
+            background: var(--secondary);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn i {
+            font-size: 1.1rem;
+        }
+
+        .audio-controls {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .audio-controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-label {
+            font-weight: 500;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .slider-container {
+            position: relative;
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: var(--primary-dark);
+        }
+
+        .time-display {
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: var(--secondary);
+            margin: 0 1rem;
+        }
+
+        #waveform {
+            width: 100%;
+            height: 200px;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--background);
+        }
+
+        #bpm {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
             text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-            opacity: 0.7;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        #confidence {
+            font-size: 1.25rem;
+            color: var(--secondary);
+            text-align: center;
+            margin-top: 0;
         }
 
-        @media (max-width: 768px) {
-            nav a {
-                font-size: 16px;
-            }
-            section {
-                width: 90%;
-            }
+        .loading {
+            display: none;
+            margin: 1.5rem 0;
+            text-align: center;
+            color: var(--secondary);
+        }
+
+        #progress {
+            width: 100%;
+            height: 8px;
+            background-color: var(--border);
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            transition: width 0.3s ease;
+        }
+
+        .transport-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .transport-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .transport-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .transport-btn i {
+            font-size: 1.2rem;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-label {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        .file-label:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--background);
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.5rem 1rem;
+            background: var(--text);
+            color: white;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
+    <button class="theme-toggle tooltip" data-tooltip="Toggle between light and dark mode">
+        <i class="fas fa-moon"></i>
+        <span>Dark Mode</span>
+    </button>
 
-<header>
-    <h1>Mystrerium</h1>
-    <nav>
-        <a href="#" onclick="showSection('home')">Home</a>
-        <a href="#" onclick="showSection('about')">About</a>
-        <a href="#" onclick="showSection('projects')">Projects</a>
-        <a href="#" onclick="showSection('contact')">Contact</a>
-    </nav>
-</header>
+    <div class="container">
+        <div class="header">
+            <h1>Professional BPM Analyzer</h1>
+        </div>
+        
+        <div class="card upload-section">
+            <h2>Upload Your Audio File</h2>
+            <div class="upload-area" id="upload-area">
+                <i class="fas fa-music upload-icon"></i>
+                <label class="file-label" for="audio-file">
+                    <i class="fas fa-cloud-upload-alt"></i> Choose Audio File
+                </label>
+                <input type="file" id="audio-file" accept="audio/*">
+                <p>Drag and drop your audio file here or click to browse</p>
+                <p class="text-sm text-secondary">Supported formats: MP3, WAV, OGG, etc.</p>
+            </div>
+            
+            <button id="analyze-btn" class="btn" disabled>
+                <i class="fas fa-calculator"></i> Analyze BPM
+            </button>
+            
+            <div class="loading" id="loading">
+                <p><i class="fas fa-spinner fa-spin"></i> Analyzing your track...</p>
+                <div id="progress">
+                    <div id="progress-bar"></div>
+                </div>
+            </div>
 
-<div id="home" class="container" style="display: flex;">
-    <section>
-        <h2>Welcome to Mystrerium!</h2>
-        <p>This is a brief description about the website and its purpose. Here, you can find amazing projects and connect with our community.</p>
-    </section>
-</div>
+            <div class="audio-controls">
+                <div id="waveform"></div>
+                
+                <div class="transport-controls">
+                    <button class="transport-btn tooltip" data-tooltip="Previous Section" id="prev-btn">
+                        <i class="fas fa-backward"></i>
+                    </button>
+                    <button class="transport-btn tooltip" data-tooltip="Rewind 5s" id="rewind-btn">
+                        <i class="fas fa-step-backward"></i>
+                    </button>
+                    <button class="transport-btn tooltip" data-tooltip="Play/Pause (Space)" id="play-btn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="transport-btn tooltip" data-tooltip="Forward 5s" id="forward-btn">
+                        <i class="fas fa-step-forward"></i>
+                    </button>
+                    <button class="transport-btn tooltip" data-tooltip="Next Section" id="next-btn">
+                        <i class="fas fa-forward"></i>
+                    </button>
+                </div>
 
-<div id="about" class="container">
-    <section>
-        <h2>About</h2>
-        <p>Mystrerium is dedicated to bringing creative ideas to life. We believe in innovation and collaboration.</p>
-    </section>
-</div>
+                <div class="audio-controls-grid">
+                    <div class="control-group">
+                        <label class="control-label">
+                            <i class="fas fa-volume-up"></i> Volume
+                        </label>
+                        <div class="slider-container">
+                            <input type="range" id="volume-slider" min="0" max="100" value="100">
+                            <span class="time-display" id="volume-display">100%</span>
+                        </div>
+                    </div>
 
-<div id="projects" class="container">
-    <section>
-        <h2>Projects</h2>
-        <p>Explore our various projects that showcase creativity and innovation. Each project represents a unique aspect of our work.</p>
-    </section>
-</div>
+                    <div class="control-group">
+                        <label class="control-label">
+                            <i class="fas fa-tachometer-alt"></i> Playback Speed
+                        </label>
+                        <div class="slider-container">
+                            <input type="range" id="speed-slider" min="50" max="200" value="100">
+                            <span class="time-display" id="speed-display">1.0x</span>
+                        </div>
+                    </div>
 
-<div id="contact" class="container">
-    <section>
-        <h2>Contact</h2>
-        <p>Feel free to reach out through our social channels. We're always eager to connect with new people!</p>
-        <a class="discord-link" href="https://discord.gg/2492tjXZhb" target="_blank">Join our Discord</a>
-    </section>
-</div>
+                    <div class="control-group">
+                        <label class="control-label">
+                            <i class="fas fa-clock"></i> Time
+                        </label>
+                        <div class="slider-container">
+                            <span class="time-display" id="current-time">0:00</span>
+                            <input type="range" id="time-slider" min="0" max="100" value="0">
+                            <span class="time-display" id="total-time">0:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<footer>
-    <p>&copy; 2024 Mystrerium. All rights reserved.</p>
-</footer>
+        <div class="card result-section">
+            <p id="bpm">--</p>
+            <p id="confidence">Upload a track to analyze its tempo</p>
+        </div>
 
-<script>
-    function showSection(sectionId) {
-        const sections = document.querySelectorAll('.container');
-        sections.forEach(section => {
-            section.style.display = 'none';
+        <div class="creator-credit">
+            Created By <a href="https://github.com/grote" target="_blank">Grote</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/6.6.3/wavesurfer.min.js"></script>
+    <script>
+        // Theme handling
+        const themeToggle = document.querySelector('.theme-toggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        // Check for saved theme preference or use system preference
+        const currentTheme = localStorage.getItem('theme') || 
+            (prefersDarkScheme.matches ? 'dark' : 'light');
+
+        // Apply theme on load
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Light Mode</span>';
+        }
+
+        // Theme toggle click handler
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            // Update button icon and text
+            const isDark = document.body.classList.contains('dark-mode');
+            themeToggle.innerHTML = isDark ? 
+                '<i class="fas fa-sun"></i><span>Light Mode</span>' : 
+                '<i class="fas fa-moon"></i><span>Dark Mode</span>';
+            
+            // Save preference
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
         });
-        document.getElementById(sectionId).style.display = 'flex';
-    }
-</script>
 
+        // Listen for system theme changes
+        prefersDarkScheme.addEventListener('change', (e) => {
+            const shouldBeDark = e.matches;
+            if (localStorage.getItem('theme') === null) {
+                document.body.classList.toggle('dark-mode', shouldBeDark);
+                themeToggle.innerHTML = shouldBeDark ? 
+                    '<i class="fas fa-sun"></i><span>Light Mode</span>' : 
+                    '<i class="fas fa-moon"></i><span>Dark Mode</span>';
+            }
+        });
+
+        let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        let wavesurfer = WaveSurfer.create({
+            container: '#waveform',
+            waveColor: '#60a5fa',
+            progressColor: '#2563eb',
+            cursorColor: '#1d4ed8',
+            barWidth: 3,
+            barGap: 2,
+            responsive: true,
+            height: 200,
+            barRadius: 3,
+            normalize: true,
+            partialRender: true
+        });
+
+        // UI Elements
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const loadingDiv = document.getElementById('loading');
+        const progressBar = document.getElementById('progress-bar');
+        const playBtn = document.getElementById('play-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const rewindBtn = document.getElementById('rewind-btn');
+        const forwardBtn = document.getElementById('forward-btn');
+        const volumeSlider = document.getElementById('volume-slider');
+        const speedSlider = document.getElementById('speed-slider');
+        const timeSlider = document.getElementById('time-slider');
+        const currentTimeDisplay = document.getElementById('current-time');
+        const totalTimeDisplay = document.getElementById('total-time');
+        const volumeDisplay = document.getElementById('volume-display');
+        const speedDisplay = document.getElementById('speed-display');
+
+        // Event Listeners
+        document.getElementById('audio-file').addEventListener('change', handleFileUpload);
+        playBtn.addEventListener('click', togglePlay);
+        prevBtn.addEventListener('click', () => skipTime(-30));
+        nextBtn.addEventListener('click', () => skipTime(30));
+        rewindBtn.addEventListener('click', () => skipTime(-5));
+        forwardBtn.addEventListener('click', () => skipTime(5));
+        volumeSlider.addEventListener('input', handleVolumeChange);
+        speedSlider.addEventListener('input', handleSpeedChange);
+        timeSlider.addEventListener('input', handleTimeChange);
+        analyzeBtn.addEventListener('click', analyzeBPM);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                togglePlay();
+            } else if (e.code === 'ArrowLeft') {
+                skipTime(-5);
+            } else if (e.code === 'ArrowRight') {
+                skipTime(5);
+            }
+        });
+
+        // WaveSurfer events
+        wavesurfer.on('ready', () => {
+            updateTotalTime();
+            analyzeBtn.disabled = false;
+            timeSlider.max = wavesurfer.getDuration();
+        });
+
+        wavesurfer.on('audioprocess', () => {
+            updateCurrentTime();
+            timeSlider.value = wavesurfer.getCurrentTime();
+        });
+
+        wavesurfer.on('play', () => {
+            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        });
+
+        wavesurfer.on('pause', () => {
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        });
+
+        // File handling
+        async function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                wavesurfer.loadBlob(file);
+                document.getElementById('bpm').textContent = '--';
+                document.getElementById('confidence').textContent = 'Click Analyze to detect BPM';
+                resetControls();
+            }
+        }
+
+        // Drag and drop handling
+        const uploadArea = document.getElementById('upload-area');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            uploadArea.classList.add('highlight');
+        }
+
+        function unhighlight(e) {
+            uploadArea.classList.remove('highlight');
+        }
+
+        uploadArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const file = dt.files[0];
+            
+            if (file && file.type.startsWith('audio/')) {
+                document.getElementById('audio-file').files = dt.files;
+                handleFileUpload({ target: { files: dt.files } });
+            }
+        }
+
+        // Playback controls
+        function togglePlay() {
+            wavesurfer.playPause();
+        }
+
+        function skipTime(seconds) {
+            const newTime = wavesurfer.getCurrentTime() + seconds;
+            wavesurfer.setCurrentTime(Math.max(0, Math.min(newTime, wavesurfer.getDuration())));
+        }
+
+        function handleVolumeChange(e) {
+            const volume = e.target.value / 100;
+            wavesurfer.setVolume(volume);
+            volumeDisplay.textContent = `${e.target.value}%`;
+        }
+
+        function handleSpeedChange(e) {
+            const speed = e.target.value / 100;
+            wavesurfer.setPlaybackRate(speed);
+            speedDisplay.textContent = `${speed.toFixed(1)}x`;
+        }
+
+        function handleTimeChange(e) {
+            wavesurfer.setCurrentTime(e.target.value);
+        }
+
+        function updateCurrentTime() {
+            currentTimeDisplay.textContent = formatTime(wavesurfer.getCurrentTime());
+        }
+
+        function updateTotalTime() {
+            totalTimeDisplay.textContent = formatTime(wavesurfer.getDuration());
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function resetControls() {
+            volumeSlider.value = 100;
+            speedSlider.value = 100;
+            timeSlider.value = 0;
+            volumeDisplay.textContent = '100%';
+            speedDisplay.textContent = '1.0x';
+        }
+
+        // BPM Analysis
+        async function analyzeBPM() {
+            const file = document.getElementById('audio-file').files[0];
+            if (!file) return;
+
+            loadingDiv.style.display = 'block';
+            analyzeBtn.disabled = true;
+            progressBar.style.width = '0%';
+
+            try {
+                const audioBuffer = await loadAudio(file);
+                const result = await detectBPM(audioBuffer);
+                
+                document.getElementById('bpm').textContent = `${Math.round(result.bpm)} BPM`;
+                document.getElementById('confidence').textContent = 
+                    `Confidence: ${(result.confidence * 100).toFixed(1)}%`;
+
+                // Animate the BPM display
+                animateBPMDisplay(result.bpm);
+            } catch (error) {
+                console.error('Error analyzing BPM:', error);
+                document.getElementById('bpm').textContent = 'Error analyzing BPM';
+            }
+
+            loadingDiv.style.display = 'none';
+            analyzeBtn.disabled = false;
+        }
+
+        function animateBPMDisplay(bpm) {
+            const bpmElement = document.getElementById('bpm');
+            bpmElement.style.animation = 'none';
+            bpmElement.offsetHeight; // Trigger reflow
+            bpmElement.style.animation = 'pulse 0.5s ease-in-out';
+        }
+
+        async function loadAudio(file) {
+            const arrayBuffer = await file.arrayBuffer();
+            return await audioContext.decodeAudioData(arrayBuffer);
+        }
+
+        function detectBPM(audioBuffer) {
+            const data = audioBuffer.getChannelData(0);
+            const sampleRate = audioBuffer.sampleRate;
+
+            // Work with a reasonable chunk of the song
+            const maxSamples = Math.min(data.length, sampleRate * 30);
+            const samples = data.slice(0, maxSamples);
+
+            const chunkSize = 2048;
+            const chunks = [];
+            for (let i = 0; i < samples.length; i += chunkSize) {
+                const chunk = samples.slice(i, i + chunkSize);
+                chunks.push(chunk);
+                
+                // Update progress bar
+                const progress = (i / maxSamples) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+
+            const energies = chunks.map(chunk => {
+                const sumOfSquares = chunk.reduce((sum, sample) => sum + sample * sample, 0);
+                return Math.sqrt(sumOfSquares / chunk.length);
+            });
+
+            const peaks = [];
+            const threshold = Math.mean(energies) * 1.5;
+
+            for (let i = 1; i < energies.length - 1; i++) {
+                if (energies[i] > threshold && energies[i] > energies[i - 1] && energies[i] > energies[i + 1]) {
+                    peaks.push(i);
+                }
+            }
+
+            const intervals = [];
+            for (let i = 1; i < peaks.length; i++) {
+                intervals.push(peaks[i] - peaks[i - 1]);
+            }
+
+            const secondsPerChunk = chunkSize / sampleRate;
+            const bpmCandidates = intervals.map(interval => 60 / (interval * secondsPerChunk));
+            const filteredBPM = bpmCandidates.filter(bpm => bpm >= 60 && bpm <= 200);
+
+            const bpmGroups = new Map();
+            filteredBPM.forEach(bpm => {
+                const roundedBPM = Math.round(bpm);
+                bpmGroups.set(roundedBPM, (bpmGroups.get(roundedBPM) || 0) + 1);
+            });
+
+            let maxCount = 0;
+            let detectedBPM = 120;
+            let totalCount = 0;
+
+            bpmGroups.forEach((count, bpm) => {
+                totalCount += count;
+                if (count > maxCount) {
+                    maxCount = count;
+                    detectedBPM = bpm;
+                }
+            });
+
+            return {
+                bpm: detectedBPM,
+                confidence: maxCount / totalCount
+            };
+        }
+
+        Math.mean = function(array) {
+            return array.reduce((a, b) => a + b) / array.length;
+        };
+    </script>
 </body>
 </html>
